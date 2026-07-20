@@ -1,539 +1,760 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>10 Years, 10 Gifts</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Lora:ital,wght@0,400;0,500;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --midnight:#0F1B3D;
-    --midnight-deep:#081026;
-    --starlight:#F5EFDD;
-    --starlight-dim:rgba(245,239,221,0.68);
-    --ember:#E8A857;
-    --ember-soft:#F2CB8E;
-    --dust-rose:#C97B84;
-    --ink-blue:#1B2A54;
-    --star-locked:rgba(245,239,221,0.45);
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    min-height:100vh;
-    background:
-      radial-gradient(1px 1px at 12% 22%, rgba(245,239,221,.55) 1px, transparent 0),
-      radial-gradient(1px 1px at 68% 14%, rgba(245,239,221,.4) 1px, transparent 0),
-      radial-gradient(1.5px 1.5px at 84% 46%, rgba(245,239,221,.5) 1px, transparent 0),
-      radial-gradient(1px 1px at 30% 68%, rgba(245,239,221,.35) 1px, transparent 0),
-      radial-gradient(1px 1px at 52% 84%, rgba(245,239,221,.45) 1px, transparent 0),
-      radial-gradient(1.5px 1.5px at 92% 88%, rgba(245,239,221,.3) 1px, transparent 0),
-      linear-gradient(180deg, var(--midnight-deep), var(--midnight) 35%, var(--midnight) 65%, var(--midnight-deep));
-    background-repeat: repeat, repeat, repeat, repeat, repeat, repeat, no-repeat;
-    background-size: 180px 180px, 220px 220px, 260px 260px, 200px 200px, 240px 240px, 300px 300px, 100% 100%;
-    color:var(--starlight);
-    font-family:'Lora', serif;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    padding:32px 16px 80px;
-    position:relative;
-    overflow-x:hidden;
-  }
-  h1{
-    font-family:'Fraunces', serif;
-    font-style:italic;
-    font-weight:600;
-    font-size:clamp(28px,7vw,44px);
-    text-align:center;
-    margin:8px 0 0;
-    letter-spacing:0.5px;
-    color:var(--starlight);
-    text-shadow:0 2px 24px rgba(232,168,87,0.2);
-  }
-  .footer-note{
-    text-align:center;
-    font-family:'Fraunces', serif;
-    font-style:italic;
-    font-size:14px;
-    color:var(--starlight-dim);
-    opacity:.6;
-    margin:40px 0 0;
-  }
-  .rule{
-    width:120px;
-    height:1px;
-    background:linear-gradient(90deg, transparent, var(--ember), transparent);
-    margin:0 0 40px;
-  }
-  .sky{
-    position:relative;
-    width:100%;
-    max-width:380px;
-    aspect-ratio:4/5;
-    margin:0 auto;
-  }
-  @media(min-width:520px){
-    .sky{max-width:520px;}
-  }
-  .constellation-lines{
-    position:absolute;inset:0;
-    width:100%;height:100%;
-    pointer-events:none;
-    overflow:visible;
-  }
-  .constellation-lines line{
-    stroke:var(--dust-rose);
-    stroke-width:0.35;
-    stroke-linecap:round;
-    opacity:0.55;
-    animation:line-fade-in 1.4s ease both;
-  }
-  @keyframes line-fade-in{from{opacity:0;}to{opacity:.55;}}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>10 Years, 10 Gifts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Lora:ital,wght@0,400;0,500;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --midnight:#0F1B3D;
+      --midnight-deep:#081026;
+      --nebula:#241B4E;
+      --starlight:#F5EFDD;
+      --starlight-dim:rgba(245,239,221,0.68);
+      --ember:#E8A857;
+      --ember-soft:#F2CB8E;
+      --nova-core:#FFF6E4;
+      --dust-rose:#C97B84;
+      --ink-blue:#1B2A54;
+      --star-locked:rgba(245,239,221,0.45);
+    }
+    *{box-sizing:border-box;}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      min-height:100vh;
+      background:var(--midnight-deep);
+      color:var(--starlight);
+      font-family:'Lora', serif;
+      position:relative;
+      overflow-x:hidden;
+    }
+    #bgSky{
+      position:fixed;inset:0;
+      width:100%;height:100%;
+      display:block;
+      z-index:0;
+    }
+    main{
+      position:relative;z-index:1;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding:40px 16px 90px;
+      min-height:100vh;
+    }
+    h1{
+      font-family:'Fraunces', serif;
+      font-style:italic;
+      font-weight:600;
+      font-size:clamp(30px,7.5vw,48px);
+      text-align:center;
+      margin:8px 0 0;
+      letter-spacing:0.5px;
+      color:var(--starlight);
+      text-shadow:0 2px 30px rgba(232,168,87,0.25);
+    }
+    h1 .word{
+      display:inline-block;
+      opacity:0;
+      filter:blur(6px);
+      transform:translateY(14px);
+    }
+    .footer-note{
+      text-align:center;
+      font-family:'Fraunces', serif;
+      font-style:italic;
+      font-size:14px;
+      color:var(--starlight-dim);
+      opacity:.6;
+      margin:48px 0 0;
+    }
+    .rule{
+      width:120px;
+      height:1px;
+      background:linear-gradient(90deg, transparent, var(--ember), transparent);
+      margin:0 0 8px;
+      transform:scaleX(0);
+    }
+    .sky{
+      position:relative;
+      width:100%;
+      max-width:420px;
+      aspect-ratio:4/5;
+      margin:48px auto 0;
+    }
+    @media(min-width:520px){
+      .sky{max-width:560px;}
+    }
+    .sky::before{
+      content:"";
+      position:absolute;
+      inset:-15%;
+      background:radial-gradient(circle at 50% 45%, var(--nebula), transparent 65%);
+      filter:blur(50px);
+      opacity:.4;
+      pointer-events:none;
+    }
+    .constellation-lines{
+      position:absolute;inset:0;
+      width:100%;height:100%;
+      pointer-events:none;
+      overflow:visible;
+    }
+    .constellation-lines line{
+      stroke:var(--dust-rose);
+      stroke-width:0.35;
+      stroke-linecap:round;
+      opacity:0.55;
+      animation:line-fade-in 1.4s ease both;
+    }
+    @keyframes line-fade-in{from{opacity:0;}to{opacity:.55;}}
 
-  .star{
-    position:absolute;
-    width:44px;height:44px;
-    transform:translate(-50%,-50%);
-    border:none;background:transparent;
-    display:flex;align-items:center;justify-content:center;
-    padding:0;
-  }
-  .star .dot{
-    width:9px;height:9px;border-radius:50%;
-    background:var(--star-locked);
-    transition:all .3s ease;
-  }
-  .star .label{
-    position:absolute;
-    top:calc(50% + 13px);
-    left:50%;
-    transform:translateX(-50%);
-    font-family:'Space Mono',monospace;
-    font-size:10px;
-    color:var(--starlight-dim);
-    opacity:.6;
-    pointer-events:none;
-    white-space:nowrap;
-  }
-  .star.unlocked, .star.opened{cursor:pointer;}
-  .star:disabled{cursor:default;}
-  /* unlocked = waiting to be discovered: modest dot, pulsing "come find me" ring */
-  .star.unlocked .dot{
-    width:9px;height:9px;
-    background:var(--ember);
-    box-shadow:0 0 5px 1px rgba(232,168,87,.55), 0 0 0 0 rgba(232,168,87,.5);
-    animation:beacon 2.4s ease-out infinite;
-  }
-  /* opened = already discovered: settled, steady, no pulse */
-  .star.opened .dot{
-    width:14px;height:14px;
-    background:var(--starlight);
-    box-shadow:0 0 10px 3px rgba(245,239,221,.55);
-  }
-  .star.unlocked:hover .dot, .star.unlocked:focus-visible .dot{
-    transform:scale(1.3);
-  }
-  @keyframes beacon{
-    0%{box-shadow:0 0 5px 1px rgba(232,168,87,.55), 0 0 0 0 rgba(232,168,87,.5);}
-    70%{box-shadow:0 0 5px 1px rgba(232,168,87,.55), 0 0 0 16px rgba(232,168,87,0);}
-    100%{box-shadow:0 0 5px 1px rgba(232,168,87,.55), 0 0 0 0 rgba(232,168,87,0);}
-  }
-  @media (prefers-reduced-motion: reduce){
-    .star.unlocked .dot{animation:none;}
-    .constellation-lines line{animation:none;opacity:.55;}
-  }
-  :focus-visible{
-    outline:2px solid var(--ember);
-    outline-offset:3px;
-  }
+    .star{
+      position:absolute;
+      width:44px;height:44px;
+      transform:translate(-50%,-50%);
+      border:none;background:transparent;
+      display:flex;align-items:center;justify-content:center;
+      padding:0;
+    }
+    .star .dot{
+      width:9px;height:9px;border-radius:50%;
+      background:var(--star-locked);
+      transition:all .3s ease;
+    }
+    .star .label{
+      position:absolute;
+      top:calc(50% + 13px);
+      left:50%;
+      transform:translateX(-50%);
+      font-family:'Space Mono',monospace;
+      font-size:10px;
+      color:var(--starlight-dim);
+      opacity:.6;
+      pointer-events:none;
+      white-space:nowrap;
+    }
+    .star.unlocked, .star.opened{cursor:pointer;}
+    .star:disabled{cursor:default;}
+    /* unlocked = waiting to be discovered: modest dot, pulsing "come find me" ring */
+    .star.unlocked .dot{
+      width:9px;height:9px;
+      background:var(--ember);
+      box-shadow:0 0 5px 1px rgba(232,168,87,.55), 0 0 0 0 rgba(232,168,87,.5);
+      animation:beacon 2.4s ease-out infinite;
+    }
+    /* opened = already discovered: settled, steady, no pulse */
+    .star.opened .dot{
+      width:14px;height:14px;
+      background:var(--starlight);
+      box-shadow:0 0 10px 3px rgba(245,239,221,.55);
+    }
+    .star.unlocked:hover .dot, .star.unlocked:focus-visible .dot{
+      transform:scale(1.3);
+    }
+    @keyframes beacon{
+      0%{box-shadow:0 0 5px 1px rgba(232,168,87,.55), 0 0 0 0 rgba(232,168,87,.5);}
+      70%{box-shadow:0 0 5px 1px rgba(232,168,87,.55), 0 0 0 16px rgba(232,168,87,0);}
+      100%{box-shadow:0 0 5px 1px rgba(232,168,87,.55), 0 0 0 0 rgba(232,168,87,0);}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .star.unlocked .dot{animation:none;}
+      .constellation-lines line{animation:none;opacity:.55;}
+      h1 .word{opacity:1;filter:none;transform:none;}
+      .rule{transform:scaleX(1);}
+    }
+    :focus-visible{
+      outline:2px solid var(--ember);
+      outline-offset:3px;
+    }
 
-  /* admin trigger, discreet */
-  .admin-dot{
-    position:fixed;
-    bottom:6px;
-    right:6px;
-    width:44px;
-    height:44px;
-    border-radius:50%;
-    background:transparent;
-    border:none;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
-  .admin-dot::after{
-    content:"";
-    width:14px;
-    height:14px;
-    border-radius:50%;
-    background:rgba(232,168,87,0.2);
-  }
-  .debug-status{
-    position:fixed;
-    bottom:6px;
-    left:6px;
-    right:60px;
-    font-family:'Space Mono',monospace;
-    font-size:10px;
-    color:var(--starlight-dim);
-    opacity:.5;
-    pointer-events:none;
-  }
+    /* admin trigger, discreet */
+    .admin-dot{
+      position:fixed;
+      bottom:6px;
+      right:6px;
+      width:44px;
+      height:44px;
+      border-radius:50%;
+      background:transparent;
+      border:none;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:2;
+    }
+    .admin-dot::after{
+      content:"";
+      width:14px;
+      height:14px;
+      border-radius:50%;
+      background:rgba(232,168,87,0.2);
+    }
+    .debug-status{
+      position:fixed;
+      bottom:6px;
+      left:6px;
+      right:60px;
+      font-family:'Space Mono',monospace;
+      font-size:10px;
+      color:var(--starlight-dim);
+      opacity:.5;
+      pointer-events:none;
+      z-index:2;
+    }
 
-  /* modal */
-  .overlay{
-    position:fixed;inset:0;
-    background:rgba(4,8,20,0.85);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    z-index:50;
-    backdrop-filter:blur(3px);
-  }
-  .overlay.show{display:flex;}
-  .card{
-    background:linear-gradient(160deg, var(--ink-blue), var(--midnight-deep));
-    color:var(--starlight);
-    border-radius:10px;
-    max-width:420px;
-    width:100%;
-    max-height:88vh;
-    overflow-y:auto;
-    padding:28px 24px 24px;
-    position:relative;
-    box-shadow:0 30px 80px rgba(0,0,0,0.6), 0 0 40px rgba(232,168,87,0.08);
-    border:1px solid rgba(232,168,87,0.35);
-  }
-  .card .roman{
-    font-family:'Space Mono', monospace;
-    color:var(--ember);
-    font-size:13px;
-    letter-spacing:3px;
-    opacity:.85;
-    margin-bottom:6px;
-  }
-  .card h2{
-    font-family:'Fraunces', serif;
-    font-style:italic;
-    font-weight:600;
-    margin:0 0 14px;
-    font-size:26px;
-    color:var(--starlight);
-  }
-  .card img{
-    width:100%;
-    border-radius:6px;
-    margin-bottom:14px;
-    display:block;
-  }
-  .card p.msg{
-    font-family:'Lora', serif;
-    font-size:18px;
-    line-height:1.6;
-    color:var(--starlight-dim);
-    white-space:pre-wrap;
-  }
-  .close-btn{
-    position:absolute;top:12px;right:14px;
-    background:none;border:none;font-size:22px;
-    color:var(--starlight);opacity:.7;cursor:pointer;line-height:1;
-  }
+    /* modal */
+    .overlay{
+      position:fixed;inset:0;
+      background:rgba(4,8,20,0.85);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      z-index:50;
+      backdrop-filter:blur(3px);
+    }
+    .overlay.show{display:flex;}
+    .card{
+      background:linear-gradient(160deg, rgba(27,42,84,.92), rgba(8,16,38,.94));
+      backdrop-filter:blur(18px) saturate(140%);
+      color:var(--starlight);
+      border-radius:18px;
+      max-width:420px;
+      width:100%;
+      max-height:88vh;
+      overflow-y:auto;
+      overflow-x:hidden;
+      padding:32px 26px 28px;
+      position:relative;
+      box-shadow:0 30px 80px rgba(0,0,0,0.6), 0 0 50px rgba(232,168,87,0.12);
+      border:1px solid rgba(232,168,87,0.35);
+    }
+    .card .roman{
+      font-family:'Space Mono', monospace;
+      color:var(--ember);
+      font-size:12px;
+      letter-spacing:4px;
+      opacity:.85;
+      margin-bottom:12px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .card .roman::after{
+      content:"";
+      flex:1;
+      height:1px;
+      background:linear-gradient(90deg, var(--ember), transparent);
+      opacity:.5;
+    }
+    .card h2{
+      font-family:'Fraunces', serif;
+      font-style:italic;
+      font-weight:600;
+      margin:0 0 16px;
+      font-size:28px;
+      color:var(--starlight);
+      text-shadow:0 2px 20px rgba(232,168,87,0.15);
+    }
+    .card img{
+      width:100%;
+      max-height:300px;
+      object-fit:contain;
+      background:rgba(4,8,20,0.35);
+      border-radius:10px;
+      margin-bottom:18px;
+      display:block;
+      box-shadow:0 8px 30px rgba(0,0,0,0.35);
+    }
+    .card p.msg{
+      font-family:'Lora', serif;
+      font-size:18px;
+      font-style:italic;
+      line-height:1.7;
+      letter-spacing:.1px;
+      color:var(--starlight-dim);
+      white-space:pre-wrap;
+    }
+    .close-btn{
+      position:absolute;top:14px;right:14px;
+      width:34px;height:34px;
+      display:flex;align-items:center;justify-content:center;
+      background:rgba(245,239,221,0.08);border:none;border-radius:50%;
+      font-size:20px;
+      color:var(--starlight);opacity:.75;cursor:pointer;line-height:1;
+      transition:background .2s ease, opacity .2s ease;
+    }
+    .close-btn:hover, .close-btn:focus-visible{
+      background:rgba(245,239,221,0.16);
+      opacity:1;
+    }
 
-  /* admin panel */
-  .admin-overlay{
-    position:fixed;inset:0;background:rgba(4,8,20,0.9);
-    display:none;align-items:flex-start;justify-content:center;
-    padding:24px 16px 60px;overflow-y:auto;z-index:60;
-  }
-  .admin-overlay.show{display:flex;}
-  .admin-panel{
-    background:var(--ink-blue);color:var(--starlight);
-    border-radius:10px;max-width:560px;width:100%;
-    padding:24px;position:relative;
-    border:1px solid rgba(232,168,87,0.25);
-  }
-  .admin-panel h2{font-family:'Fraunces',serif;font-style:italic;color:var(--ember-soft);margin-top:0;}
-  .pin-box{display:flex;flex-direction:column;gap:12px;align-items:center;padding:20px 0;}
-  .pin-box input{
-    font-size:24px;letter-spacing:8px;text-align:center;
-    padding:10px;width:160px;border:1px solid rgba(232,168,87,0.4);border-radius:6px;
-    font-family:'Space Mono',monospace;background:var(--midnight-deep);color:var(--starlight);
-  }
-  .btn{
-    background:var(--ember);color:var(--midnight-deep);border:none;
-    padding:10px 18px;border-radius:6px;font-size:14px;cursor:pointer;
-    font-family:'Space Mono',monospace;font-weight:700;letter-spacing:.3px;
-  }
-  .btn.secondary{background:transparent;color:var(--ember-soft);border:1px solid rgba(232,168,87,0.4);}
-  .btn:disabled{opacity:0.5;cursor:default;}
-  .case-editor{
-    border-top:1px solid rgba(232,168,87,0.18);
-    padding:14px 0;
-    display:flex;gap:12px;
-  }
-  .case-editor .num-col{
-    font-family:'Fraunces',serif;font-style:italic;font-size:22px;color:var(--ember-soft);
-    width:34px;flex-shrink:0;padding-top:6px;
-  }
-  .case-editor .fields{flex:1;display:flex;flex-direction:column;gap:6px;}
-  .case-editor input[type=text], .case-editor textarea{
-    width:100%;padding:6px 8px;border:1px solid rgba(232,168,87,0.3);border-radius:4px;
-    font-family:'Lora',serif;font-size:16px;background:var(--midnight-deep);color:var(--starlight);
-  }
-  .case-editor textarea{resize:vertical;min-height:44px;}
-  .row-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-  .status-tag{
-    font-family:'Space Mono',monospace;
-    font-size:12px;padding:2px 8px;border-radius:10px;letter-spacing:0.5px;
-  }
-  .status-tag.locked{background:rgba(245,239,221,.12);color:var(--starlight-dim);}
-  .status-tag.unlocked{background:rgba(232,168,87,.18);color:var(--ember-soft);}
-  .status-tag.opened{background:rgba(201,123,132,.22);color:var(--dust-rose);}
-  .thumb{width:44px;height:44px;object-fit:cover;border-radius:4px;}
-  .close-btn.admin{color:var(--starlight);}
-  .saved-msg{font-family:'Space Mono',monospace;font-size:13px;color:var(--ember-soft);opacity:0;transition:opacity .3s;}
-  .saved-msg.show{opacity:0.9;}
-</style>
+    /* admin panel */
+    .admin-overlay{
+      position:fixed;inset:0;background:rgba(4,8,20,0.9);
+      display:none;align-items:flex-start;justify-content:center;
+      padding:24px 16px 60px;overflow-y:auto;z-index:60;
+    }
+    .admin-overlay.show{display:flex;}
+    .admin-panel{
+      background:var(--ink-blue);color:var(--starlight);
+      border-radius:10px;max-width:560px;width:100%;
+      padding:24px;position:relative;
+      border:1px solid rgba(232,168,87,0.25);
+    }
+    .admin-panel h2{font-family:'Fraunces',serif;font-style:italic;color:var(--ember-soft);margin-top:0;}
+    .pin-box{display:flex;flex-direction:column;gap:12px;align-items:center;padding:20px 0;}
+    .pin-box input{
+      font-size:24px;letter-spacing:8px;text-align:center;
+      padding:10px;width:160px;border:1px solid rgba(232,168,87,0.4);border-radius:6px;
+      font-family:'Space Mono',monospace;background:var(--midnight-deep);color:var(--starlight);
+    }
+    .btn{
+      background:var(--ember);color:var(--midnight-deep);border:none;
+      padding:10px 18px;border-radius:6px;font-size:14px;cursor:pointer;
+      font-family:'Space Mono',monospace;font-weight:700;letter-spacing:.3px;
+    }
+    .btn.secondary{background:transparent;color:var(--ember-soft);border:1px solid rgba(232,168,87,0.4);}
+    .btn:disabled{opacity:0.5;cursor:default;}
+    .case-editor{
+      border-top:1px solid rgba(232,168,87,0.18);
+      padding:14px 0;
+      display:flex;gap:12px;
+    }
+    .case-editor .num-col{
+      font-family:'Fraunces',serif;font-style:italic;font-size:22px;color:var(--ember-soft);
+      width:34px;flex-shrink:0;padding-top:6px;
+    }
+    .case-editor .fields{flex:1;display:flex;flex-direction:column;gap:6px;}
+    .case-editor input[type=text], .case-editor textarea{
+      width:100%;padding:6px 8px;border:1px solid rgba(232,168,87,0.3);border-radius:4px;
+      font-family:'Lora',serif;font-size:16px;background:var(--midnight-deep);color:var(--starlight);
+    }
+    .case-editor textarea{resize:vertical;min-height:44px;}
+    .row-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+    .status-tag{
+      font-family:'Space Mono',monospace;
+      font-size:12px;padding:2px 8px;border-radius:10px;letter-spacing:0.5px;
+    }
+    .status-tag.locked{background:rgba(245,239,221,.12);color:var(--starlight-dim);}
+    .status-tag.unlocked{background:rgba(232,168,87,.18);color:var(--ember-soft);}
+    .status-tag.opened{background:rgba(201,123,132,.22);color:var(--dust-rose);}
+    .thumb{width:44px;height:44px;object-fit:cover;border-radius:4px;}
+    .close-btn.admin{color:var(--starlight);}
+    .saved-msg{font-family:'Space Mono',monospace;font-size:13px;color:var(--ember-soft);opacity:0;transition:opacity .3s;}
+    .saved-msg.show{opacity:0.9;}
+  </style>
 </head>
 <body>
 
-  <h1>10 Years, 10 Gifts</h1>
+<canvas id="bgSky" aria-hidden="true"></canvas>
+
+<main>
+  <h1><span class="word">10 Years,</span> <span class="word">10 Gifts</span></h1>
   <div class="rule"></div>
 
   <div class="sky" id="sky"></div>
 
   <div class="footer-note">Pour mon petit ours 🐻</div>
+</main>
 
-  <button class="admin-dot" id="adminDot" title=""></button>
-  <div class="debug-status" id="debugStatus" aria-live="polite"></div>
+<button class="admin-dot" id="adminDot" title=""></button>
+<div class="debug-status" id="debugStatus" aria-live="polite"></div>
 
-  <!-- reveal modal -->
-  <div class="overlay" id="overlay">
-    <div class="card">
-      <button class="close-btn" id="closeCard">×</button>
-      <div class="roman" id="cardRoman"></div>
-      <h2 id="cardName"></h2>
-      <img id="cardImg" alt="" style="display:none;">
-      <p class="msg" id="cardMsg"></p>
-    </div>
+<!-- reveal modal -->
+<div class="overlay" id="overlay">
+  <div class="card">
+    <button class="close-btn" id="closeCard">×</button>
+    <div class="roman" id="cardRoman"></div>
+    <h2 id="cardName"></h2>
+    <img id="cardImg" alt="" style="display:none;">
+    <p class="msg" id="cardMsg"></p>
   </div>
+</div>
 
-  <!-- admin overlay -->
-  <div class="admin-overlay" id="adminOverlay">
-    <div class="admin-panel">
-      <button class="close-btn admin" id="closeAdmin">×</button>
-      <div id="adminContent"></div>
-    </div>
+<!-- admin overlay -->
+<div class="admin-overlay" id="adminOverlay">
+  <div class="admin-panel">
+    <button class="close-btn admin" id="closeAdmin">×</button>
+    <div id="adminContent"></div>
   </div>
+</div>
 
 <script type="module">
-import { createClient } from "https://esm.sh/@libsql/client@0.14.0/web";
+  import { createClient } from "https://esm.sh/@libsql/client@0.14.0/web";
+  import gsap from "https://esm.sh/gsap@3.12.5";
 
-// === À REMPLIR ===
-const TURSO_URL = "libsql://10year-a-joyeux.aws-eu-west-1.turso.io";
-const TURSO_TOKEN = "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJleHAiOjE3ODcxNjk2ODMsImdpZCI6ImZiY2M1NGMwLWRhZWMtNDE4Mi04YWRkLWM2OGNlM2Q2NmFjMyIsImlhdCI6MTc4NDU3NzY4Mywia2lkIjoiZjE0d1p4NXN3b09EdnJ4UmFVaEZmNUdLVWlqRzBTcHNfeTk0Q083NGNtQSIsInJpZCI6IjllZjMyZjIwLTFmZjYtNDBmZi1hZjFmLWFjZmFlNmM1NWUwMCJ9.Qr0QKX6oUB19g3-D8sHm7PgDRhyolSOl1O40RXMG8yafyQuC-TXmkqrvBxjPmIuaJ9Yzz6zdpcavNidiA74WCQ";
-// ==================
+  const TURSO_URL = "libsql://10year-a-joyeux.aws-eu-west-1.turso.io";
+  const TURSO_TOKEN = "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJleHAiOjE3ODcxNjk2ODMsImdpZCI6ImZiY2M1NGMwLWRhZWMtNDE4Mi04YWRkLWM2OGNlM2Q2NmFjMyIsImlhdCI6MTc4NDU3NzY4Mywia2lkIjoiZjE0d1p4NXN3b09EdnJ4UmFVaEZmNUdLVWlqRzBTcHNfeTk0Q083NGNtQSIsInJpZCI6IjllZjMyZjIwLTFmZjYtNDBmZi1hZjFmLWFjZmFlNmM1NWUwMCJ9.Qr0QKX6oUB19g3-D8sHm7PgDRhyolSOl1O40RXMG8yafyQuC-TXmkqrvBxjPmIuaJ9Yzz6zdpcavNidiA74WCQ";
 
-const CASES_KEY = "gift_cases";
-const PIN_KEY = "admin_pin";
+  const CASES_KEY = "gift_cases";
+  const PIN_KEY = "admin_pin";
 
-// positions of the 10 stars in the sky, as % of the .sky box (0-100)
-const STAR_POS = {
-  1:{x:15,y:18}, 2:{x:58,y:10}, 3:{x:85,y:30}, 4:{x:32,y:38}, 5:{x:70,y:46},
-  6:{x:10,y:58}, 7:{x:46,y:62}, 8:{x:80,y:70}, 9:{x:24,y:86}, 10:{x:62,y:92}
-};
+  // positions of the 10 stars in the sky, as % of the .sky box (0-100)
+  const STAR_POS = {
+    1:{x:15,y:18}, 2:{x:58,y:10}, 3:{x:85,y:30}, 4:{x:32,y:38}, 5:{x:70,y:46},
+    6:{x:10,y:58}, 7:{x:46,y:62}, 8:{x:80,y:70}, 9:{x:24,y:86}, 10:{x:62,y:92}
+  };
 
-let cases = null;
-let adminAuthed = localStorage.getItem('admin_authed') === '1';
-let client = null;
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-function configReady(){
-  return TURSO_URL && !TURSO_URL.includes("COLLE_") && TURSO_TOKEN && !TURSO_TOKEN.includes("COLLE_");
-}
+  // ---------- LIVING SKY (ambient canvas: twinkle, parallax, shooting stars, nova bursts) ----------
+  const bgCanvas = document.getElementById('bgSky');
+  const skyCtx = bgCanvas.getContext('2d');
+  let W = 0, H = 0, dpr = 1;
+  let bgStars = [];
+  let shootingStar = null;
+  let bursts = [];
+  let parallax = {x:0,y:0}, parallaxTarget = {x:0,y:0};
 
-function getClient(){
-  if(!client){
-    client = createClient({ url: TURSO_URL, authToken: TURSO_TOKEN });
+  function resizeCanvas(){
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    bgCanvas.width = W * dpr; bgCanvas.height = H * dpr;
+    bgCanvas.style.width = W + 'px'; bgCanvas.style.height = H + 'px';
+    skyCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    seedStars();
   }
-  return client;
-}
 
-async function ensureTable(){
-  await getClient().execute(
-    "CREATE TABLE IF NOT EXISTS kv (key TEXT PRIMARY KEY, value TEXT NOT NULL)"
-  );
-}
+  function seedStars(){
+    const count = Math.round((W * H) / 9000);
+    bgStars = Array.from({length: count}, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.3 + 0.3,
+      baseAlpha: Math.random() * 0.5 + 0.25,
+      phase: Math.random() * Math.PI * 2,
+      speed: Math.random() * 0.5 + 0.2,
+      depth: Math.random() * 0.6 + 0.4
+    }));
+  }
 
-async function kvGet(key){
-  const res = await getClient().execute({
-    sql: "SELECT value FROM kv WHERE key = ?",
-    args: [key]
+  function scheduleShootingStar(){
+    const delay = 9000 + Math.random() * 14000;
+    setTimeout(() => {
+      shootingStar = {
+        x: Math.random() * W * 0.6,
+        y: Math.random() * H * 0.3,
+        vx: 3 + Math.random() * 2,
+        vy: 1.4 + Math.random() * 1,
+        life: 1
+      };
+      scheduleShootingStar();
+    }, delay);
+  }
+
+  function drawFrame(t){
+    skyCtx.clearRect(0, 0, W, H);
+
+    parallax.x += (parallaxTarget.x - parallax.x) * 0.04;
+    parallax.y += (parallaxTarget.y - parallax.y) * 0.04;
+
+    for(const s of bgStars){
+      const alpha = Math.max(0, s.baseAlpha + Math.sin(t * 0.001 * s.speed + s.phase) * 0.25);
+      const px = s.x + parallax.x * s.depth;
+      const py = s.y + parallax.y * s.depth;
+      skyCtx.beginPath();
+      skyCtx.arc(px, py, s.r, 0, Math.PI * 2);
+      skyCtx.fillStyle = `rgba(245,239,221,${alpha})`;
+      skyCtx.fill();
+    }
+
+    if(shootingStar){
+      const s = shootingStar;
+      skyCtx.strokeStyle = `rgba(245,239,221,${s.life})`;
+      skyCtx.lineWidth = 1.4;
+      skyCtx.beginPath();
+      skyCtx.moveTo(s.x, s.y);
+      skyCtx.lineTo(s.x - s.vx * 18, s.y - s.vy * 18);
+      skyCtx.stroke();
+      s.x += s.vx; s.y += s.vy; s.life -= 0.02;
+      if(s.life <= 0 || s.x > W || s.y > H) shootingStar = null;
+    }
+
+    bursts = bursts.filter(b => b.life > 0);
+    for(const b of bursts){
+      const grd = skyCtx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r * b.life);
+      grd.addColorStop(0, `rgba(255,246,228,${0.9 * b.life})`);
+      grd.addColorStop(0.4, `rgba(232,168,87,${0.5 * b.life})`);
+      grd.addColorStop(1, 'rgba(232,168,87,0)');
+      skyCtx.fillStyle = grd;
+      skyCtx.beginPath();
+      skyCtx.arc(b.x, b.y, Math.max(0, b.r * b.life), 0, Math.PI * 2);
+      skyCtx.fill();
+      b.life -= 0.025;
+    }
+
+    if(!reduceMotion) requestAnimationFrame(drawFrame);
+  }
+
+  function novaBurst(x, y){
+    bursts.push({x, y, r:70, life:1});
+    if(reduceMotion){ drawFrame(0); setTimeout(() => { bursts = []; drawFrame(0); }, 60); }
+  }
+
+  window.addEventListener('resize', resizeCanvas);
+  if(!reduceMotion){
+    window.addEventListener('pointermove', (e) => {
+      parallaxTarget.x = (e.clientX / W - 0.5) * -18;
+      parallaxTarget.y = (e.clientY / H - 0.5) * -18;
+    });
+    window.addEventListener('deviceorientation', (e) => {
+      if(e.gamma == null) return;
+      parallaxTarget.x = Math.max(-18, Math.min(18, e.gamma * 0.6));
+      parallaxTarget.y = Math.max(-18, Math.min(18, (e.beta - 40) * 0.4));
+    });
+    scheduleShootingStar();
+  }
+  resizeCanvas();
+  if(reduceMotion) drawFrame(0); else requestAnimationFrame(drawFrame);
+
+  let cases = null;
+  let adminAuthed = localStorage.getItem('admin_authed') === '1';
+  let client = null;
+
+  function configReady(){
+    return TURSO_URL && !TURSO_URL.includes("COLLE_") && TURSO_TOKEN && !TURSO_TOKEN.includes("COLLE_");
+  }
+
+  function getClient(){
+    if(!client){
+      client = createClient({ url: TURSO_URL, authToken: TURSO_TOKEN });
+    }
+    return client;
+  }
+
+  async function ensureTable(){
+    await getClient().execute(
+            "CREATE TABLE IF NOT EXISTS kv (key TEXT PRIMARY KEY, value TEXT NOT NULL)"
+    );
+  }
+
+  async function kvGet(key){
+    const res = await getClient().execute({
+      sql: "SELECT value FROM kv WHERE key = ?",
+      args: [key]
+    });
+    if(res.rows.length === 0) throw new Error("clé introuvable");
+    return { value: res.rows[0].value };
+  }
+
+  async function kvSet(key, value){
+    await getClient().execute({
+      sql: "INSERT INTO kv (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value=excluded.value",
+      args: [key, value]
+    });
+    return { key, value };
+  }
+
+  function defaultCases(){
+    return Array.from({length:10}, (_,i)=>({
+      id:i+1, name:"", message:"", photo:"", unlocked:false, opened:false, openOrder:null
+    }));
+  }
+
+  function setDebug(msg){
+    const el = document.getElementById('debugStatus');
+    if(el) el.textContent = msg;
+  }
+
+  window.addEventListener('error', (e)=>{ setDebug('Erreur JS : ' + (e.message || 'inconnue')); });
+  window.addEventListener('unhandledrejection', (e)=>{
+    setDebug('Erreur async : ' + (e.reason && e.reason.message ? e.reason.message : String(e.reason)));
   });
-  if(res.rows.length === 0) throw new Error("clé introuvable");
-  return { value: res.rows[0].value };
-}
 
-async function kvSet(key, value){
-  await getClient().execute({
-    sql: "INSERT INTO kv (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value=excluded.value",
-    args: [key, value]
-  });
-  return { key, value };
-}
-
-function defaultCases(){
-  return Array.from({length:10}, (_,i)=>({
-    id:i+1, name:"", message:"", photo:"", unlocked:false, opened:false, openOrder:null
-  }));
-}
-
-function setDebug(msg){
-  const el = document.getElementById('debugStatus');
-  if(el) el.textContent = msg;
-}
-
-window.addEventListener('error', (e)=>{ setDebug('Erreur JS : ' + (e.message || 'inconnue')); });
-window.addEventListener('unhandledrejection', (e)=>{
-  setDebug('Erreur async : ' + (e.reason && e.reason.message ? e.reason.message : String(e.reason)));
-});
-
-async function loadCases(){
-  if(!configReady()){ cases = defaultCases(); return; }
-  try{
-    const res = await kvGet(CASES_KEY);
-    cases = JSON.parse(res.value);
-  }catch(e){
-    if(e.message === "clé introuvable"){
-      // first run ever: no row yet, safe to create defaults
-      cases = defaultCases();
-      try{ await kvSet(CASES_KEY, JSON.stringify(cases)); }catch(e2){ /* retry later */ }
-    }else{
-      // network/parse hiccup: don't overwrite real data, just keep last known state
-      setDebug('Erreur chargement (données conservées) : ' + e.message);
-      if(!cases) cases = defaultCases();
+  async function loadCases(){
+    if(!configReady()){ cases = defaultCases(); return; }
+    try{
+      const res = await kvGet(CASES_KEY);
+      cases = JSON.parse(res.value);
+    }catch(e){
+      if(e.message === "clé introuvable"){
+        // first run ever: no row yet, safe to create defaults
+        cases = defaultCases();
+        try{ await kvSet(CASES_KEY, JSON.stringify(cases)); }catch(e2){ /* retry later */ }
+      }else{
+        // network/parse hiccup: don't overwrite real data, just keep last known state
+        setDebug('Erreur chargement (données conservées) : ' + e.message);
+        if(!cases) cases = defaultCases();
+      }
     }
   }
-}
 
-async function saveCases(){
-  if(!configReady()) return;
-  try{ await kvSet(CASES_KEY, JSON.stringify(cases)); }
-  catch(e){ setDebug('Erreur sauvegarde : ' + e.message); }
-}
+  async function saveCases(){
+    if(!configReady()) return;
+    try{ await kvSet(CASES_KEY, JSON.stringify(cases)); }
+    catch(e){ setDebug('Erreur sauvegarde : ' + e.message); }
+  }
 
-function renderGrid(){
-  const sky = document.getElementById('sky');
-  sky.innerHTML = "";
+  function renderGrid(){
+    const sky = document.getElementById('sky');
+    sky.innerHTML = "";
 
-  // lines trace her actual discovery order, not the unlock order or case number
-  const discovered = cases.filter(c=>c.opened).sort((a,b)=>(a.openOrder ?? a.id)-(b.openOrder ?? b.id));
-  if(discovered.length > 1){
+    // lines trace her actual discovery order, not the unlock order or case number
+    const discovered = cases.filter(c=>c.opened).sort((a,b)=>(a.openOrder ?? a.id)-(b.openOrder ?? b.id));
+    if(discovered.length > 1){
+      const svgNS = "http://www.w3.org/2000/svg";
+      const svg = document.createElementNS(svgNS,"svg");
+      svg.setAttribute("class","constellation-lines");
+      svg.setAttribute("viewBox","0 0 100 100");
+      svg.setAttribute("preserveAspectRatio","none");
+      for(let i=0;i<discovered.length-1;i++){
+        const a = STAR_POS[discovered[i].id], b = STAR_POS[discovered[i+1].id];
+        const line = document.createElementNS(svgNS,"line");
+        line.setAttribute("x1",a.x); line.setAttribute("y1",a.y);
+        line.setAttribute("x2",b.x); line.setAttribute("y2",b.y);
+        svg.appendChild(line);
+      }
+      sky.appendChild(svg);
+    }
+
+    cases.forEach(c=>{
+      const pos = STAR_POS[c.id];
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      let cls = 'star locked';
+      if(c.opened) cls = 'star opened';
+      else if(c.unlocked) cls = 'star unlocked';
+      btn.className = cls;
+      btn.style.left = pos.x + '%';
+      btn.style.top = pos.y + '%';
+      btn.innerHTML = `<span class="dot"></span><span class="label" aria-hidden="true">${c.id}</span>`;
+      if(c.unlocked || c.opened){
+        btn.onclick = ()=>openCase(c.id);
+        btn.setAttribute('aria-label', (c.opened?'Revoir l’étoile ':'Découvrir l’étoile ') + c.id);
+      }else{
+        btn.disabled = true;
+        btn.setAttribute('aria-label', 'Étoile ' + c.id + ', pas encore visible');
+      }
+      sky.appendChild(btn);
+    });
+  }
+
+  function skyPointToClient(id){
+    const rect = document.getElementById('sky').getBoundingClientRect();
+    const pos = STAR_POS[id];
+    return { x: rect.left + rect.width * pos.x / 100, y: rect.top + rect.height * pos.y / 100 };
+  }
+
+  function revealStar(newId, prevId){
+    const pt = skyPointToClient(newId);
+    novaBurst(pt.x, pt.y);
+
+    if(!prevId || reduceMotion){ renderGrid(); return; }
+
+    const sky = document.getElementById('sky');
     const svgNS = "http://www.w3.org/2000/svg";
-    const svg = document.createElementNS(svgNS,"svg");
-    svg.setAttribute("class","constellation-lines");
-    svg.setAttribute("viewBox","0 0 100 100");
-    svg.setAttribute("preserveAspectRatio","none");
-    for(let i=0;i<discovered.length-1;i++){
-      const a = STAR_POS[discovered[i].id], b = STAR_POS[discovered[i+1].id];
-      const line = document.createElementNS(svgNS,"line");
-      line.setAttribute("x1",a.x); line.setAttribute("y1",a.y);
-      line.setAttribute("x2",b.x); line.setAttribute("y2",b.y);
-      svg.appendChild(line);
+    let svg = sky.querySelector('svg.constellation-lines');
+    if(!svg){
+      svg = document.createElementNS(svgNS,"svg");
+      svg.setAttribute("class","constellation-lines");
+      svg.setAttribute("viewBox","0 0 100 100");
+      svg.setAttribute("preserveAspectRatio","none");
+      sky.appendChild(svg);
     }
-    sky.appendChild(svg);
+    const a = STAR_POS[prevId], b = STAR_POS[newId];
+    const line = document.createElementNS(svgNS,"line");
+    line.setAttribute("x1",a.x); line.setAttribute("y1",a.y);
+    line.setAttribute("x2",b.x); line.setAttribute("y2",b.y);
+    svg.appendChild(line);
+    const len = line.getTotalLength();
+    line.style.animation = 'none';
+    line.style.strokeDasharray = len;
+    line.style.strokeDashoffset = len;
+    gsap.to(line, { strokeDashoffset:0, duration:0.9, ease:"power2.out", onComplete: renderGrid });
   }
 
-  cases.forEach(c=>{
-    const pos = STAR_POS[c.id];
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    let cls = 'star locked';
-    if(c.opened) cls = 'star opened';
-    else if(c.unlocked) cls = 'star unlocked';
-    btn.className = cls;
-    btn.style.left = pos.x + '%';
-    btn.style.top = pos.y + '%';
-    btn.innerHTML = `<span class="dot"></span><span class="label" aria-hidden="true">${c.id}</span>`;
-    if(c.unlocked || c.opened){
-      btn.onclick = ()=>openCase(c.id);
-      btn.setAttribute('aria-label', (c.opened?'Revoir l’étoile ':'Découvrir l’étoile ') + c.id);
-    }else{
-      btn.disabled = true;
-      btn.setAttribute('aria-label', 'Étoile ' + c.id + ', pas encore visible');
+  function animateOverlayIn(){
+    if(reduceMotion) return;
+    const card = document.querySelector('#overlay .card');
+    gsap.fromTo(card, {opacity:0, scale:0.92, filter:'blur(8px)'}, {opacity:1, scale:1, filter:'blur(0px)', duration:0.5, ease:"power2.out"});
+  }
+
+  function openCase(id){
+    const c = cases.find(x=>x.id===id);
+    if(!c) return;
+    document.getElementById('cardRoman').textContent = id;
+    document.getElementById('cardName').textContent = c.name || "Un secret t'attend";
+    document.getElementById('cardMsg').textContent = c.message || "";
+    const img = document.getElementById('cardImg');
+    if(c.photo){ img.src = c.photo; img.alt = c.name || ("Étoile " + id); img.style.display='block'; }
+    else{ img.style.display='none'; }
+    document.getElementById('overlay').classList.add('show');
+    animateOverlayIn();
+    if(!c.opened){
+      const discovered = cases.filter(x=>x.opened).sort((a,b)=>(a.openOrder ?? a.id)-(b.openOrder ?? b.id));
+      const prev = discovered[discovered.length-1];
+      c.opened = true;
+      c.openOrder = cases.reduce((max,x)=> x.openOrder ? Math.max(max,x.openOrder) : max, 0) + 1;
+      saveCases();
+      revealStar(id, prev ? prev.id : null);
     }
-    sky.appendChild(btn);
+  }
+
+  function closeCard(){
+    const overlay = document.getElementById('overlay');
+    if(reduceMotion){ overlay.classList.remove('show'); return; }
+    const card = document.querySelector('#overlay .card');
+    gsap.to(card, {opacity:0, scale:0.96, duration:0.2, ease:"power1.in", onComplete:()=>overlay.classList.remove('show')});
+  }
+  document.getElementById('closeCard').onclick = closeCard;
+  // e.target===e.currentTarget: only the backdrop itself closes it, a tap/click
+  // anywhere inside .card (including while scrolling its content) does not
+  document.getElementById('overlay').addEventListener('click', (e)=>{
+    if(e.target === e.currentTarget) closeCard();
   });
-}
 
-function openCase(id){
-  const c = cases.find(x=>x.id===id);
-  if(!c) return;
-  document.getElementById('cardRoman').textContent = id;
-  document.getElementById('cardName').textContent = c.name || "Un secret t'attend";
-  document.getElementById('cardMsg').textContent = c.message || "";
-  const img = document.getElementById('cardImg');
-  if(c.photo){ img.src = c.photo; img.alt = c.name || ("Étoile " + id); img.style.display='block'; }
-  else{ img.style.display='none'; }
-  document.getElementById('overlay').classList.add('show');
-  if(!c.opened){
-    c.opened = true;
-    c.openOrder = cases.reduce((max,x)=> x.openOrder ? Math.max(max,x.openOrder) : max, 0) + 1;
-    saveCases();
-    renderGrid();
-  }
-}
+  // ---------- ADMIN ----------
+  document.getElementById('adminDot').onclick = ()=> openAdmin();
+  document.getElementById('closeAdmin').onclick = ()=>{
+    document.getElementById('adminOverlay').classList.remove('show');
+  };
+  document.getElementById('adminOverlay').addEventListener('click', (e)=>{
+    if(e.target === e.currentTarget) document.getElementById('adminOverlay').classList.remove('show');
+  });
 
-document.getElementById('closeCard').onclick = ()=>{
-  document.getElementById('overlay').classList.remove('show');
-};
+  async function openAdmin(){
+    document.getElementById('adminOverlay').classList.add('show');
 
-// ---------- ADMIN ----------
-document.getElementById('adminDot').onclick = ()=> openAdmin();
-document.getElementById('closeAdmin').onclick = ()=>{
-  document.getElementById('adminOverlay').classList.remove('show');
-};
-
-async function openAdmin(){
-  document.getElementById('adminOverlay').classList.add('show');
-
-  if(!configReady()){
-    document.getElementById('adminContent').innerHTML = `
+    if(!configReady()){
+      document.getElementById('adminContent').innerHTML = `
       <h2>Configuration manquante</h2>
       <p>Ouvre le fichier HTML dans un éditeur de texte et remplace <code>TURSO_URL</code> et <code>TURSO_TOKEN</code> tout en haut du script par tes identifiants Turso.</p>
     `;
-    return;
-  }
+      return;
+    }
 
-  try{
-    await ensureTable();
-  }catch(e){
-    document.getElementById('adminContent').innerHTML = `
+    try{
+      await ensureTable();
+    }catch(e){
+      document.getElementById('adminContent').innerHTML = `
       <h2>Connexion à la base impossible</h2>
       <p style="color:#e79191;">${e.message}</p>
       <p>Vérifie l'URL et le token Turso, et que la base autorise les requêtes depuis le navigateur.</p>
     `;
-    return;
+      return;
+    }
+
+    let pinRes, storedPin = null;
+    try{
+      pinRes = await kvGet(PIN_KEY);
+      storedPin = JSON.parse(pinRes.value);
+    }catch(e){ storedPin = null; }
+
+    if(!storedPin){ renderPinSetup(); }
+    else if(!adminAuthed){ renderPinEntry(storedPin); }
+    else{ renderAdminEditor(); }
   }
 
-  let pinRes, storedPin = null;
-  try{
-    pinRes = await kvGet(PIN_KEY);
-    storedPin = JSON.parse(pinRes.value);
-  }catch(e){ storedPin = null; }
-
-  if(!storedPin){ renderPinSetup(); }
-  else if(!adminAuthed){ renderPinEntry(storedPin); }
-  else{ renderAdminEditor(); }
-}
-
-function renderPinSetup(){
-  const c = document.getElementById('adminContent');
-  c.innerHTML = `
+  function renderPinSetup(){
+    const c = document.getElementById('adminContent');
+    c.innerHTML = `
     <h2>Créer ton code admin</h2>
     <p>Choisis un code à 4 chiffres pour protéger l'accès admin.</p>
     <div class="pin-box">
@@ -541,23 +762,23 @@ function renderPinSetup(){
       <button class="btn" id="setPinBtn">Créer le code</button>
     </div>
   `;
-  document.getElementById('setPinBtn').onclick = async ()=>{
-    const val = document.getElementById('newPin').value.trim();
-    if(val.length !== 4){ alert("Le code doit contenir 4 chiffres."); return; }
-    try{
-      await kvSet(PIN_KEY, JSON.stringify(val));
-      adminAuthed = true;
-      localStorage.setItem('admin_authed', '1');
-      renderAdminEditor();
-    }catch(e){
-      alert("Erreur de sauvegarde du code : " + e.message);
-    }
-  };
-}
+    document.getElementById('setPinBtn').onclick = async ()=>{
+      const val = document.getElementById('newPin').value.trim();
+      if(val.length !== 4){ alert("Le code doit contenir 4 chiffres."); return; }
+      try{
+        await kvSet(PIN_KEY, JSON.stringify(val));
+        adminAuthed = true;
+        localStorage.setItem('admin_authed', '1');
+        renderAdminEditor();
+      }catch(e){
+        alert("Erreur de sauvegarde du code : " + e.message);
+      }
+    };
+  }
 
-function renderPinEntry(realPin){
-  const c = document.getElementById('adminContent');
-  c.innerHTML = `
+  function renderPinEntry(realPin){
+    const c = document.getElementById('adminContent');
+    c.innerHTML = `
     <h2>Accès admin</h2>
     <div class="pin-box">
       <input type="password" inputmode="numeric" maxlength="4" id="pinInput" placeholder="••••">
@@ -565,39 +786,39 @@ function renderPinEntry(realPin){
       <div id="pinErr" style="color:#e79191;font-size:14px;"></div>
     </div>
   `;
-  document.getElementById('checkPinBtn').onclick = ()=>{
-    const val = document.getElementById('pinInput').value.trim();
-    if(val === realPin){ adminAuthed = true; localStorage.setItem('admin_authed', '1'); renderAdminEditor(); }
-    else{ document.getElementById('pinErr').textContent = "Code incorrect."; }
-  };
-}
-
-function resizeImage(file, maxW=900){
-  return new Promise((resolve)=>{
-    const reader = new FileReader();
-    reader.onload = (e)=>{
-      const img = new Image();
-      img.onload = ()=>{
-        const scale = Math.min(1, maxW / img.width);
-        const canvas = document.createElement('canvas');
-        canvas.width = img.width * scale;
-        canvas.height = img.height * scale;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        resolve(canvas.toDataURL('image/jpeg', 0.8));
-      };
-      img.src = e.target.result;
+    document.getElementById('checkPinBtn').onclick = ()=>{
+      const val = document.getElementById('pinInput').value.trim();
+      if(val === realPin){ adminAuthed = true; localStorage.setItem('admin_authed', '1'); renderAdminEditor(); }
+      else{ document.getElementById('pinErr').textContent = "Code incorrect."; }
     };
-    reader.readAsDataURL(file);
-  });
-}
+  }
 
-function renderAdminEditor(){
-  const c = document.getElementById('adminContent');
-  let rows = cases.map(cs=>{
-    const status = cs.opened ? 'opened' : (cs.unlocked ? 'unlocked' : 'locked');
-    const statusLabel = cs.opened ? 'ouverte' : (cs.unlocked ? 'débloquée' : 'verrouillée');
-    return `
+  function resizeImage(file, maxW=900){
+    return new Promise((resolve)=>{
+      const reader = new FileReader();
+      reader.onload = (e)=>{
+        const img = new Image();
+        img.onload = ()=>{
+          const scale = Math.min(1, maxW / Math.max(img.width, img.height));
+          const canvas = document.createElement('canvas');
+          canvas.width = img.width * scale;
+          canvas.height = img.height * scale;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          resolve(canvas.toDataURL('image/jpeg', 0.8));
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function renderAdminEditor(){
+    const c = document.getElementById('adminContent');
+    let rows = cases.map(cs=>{
+      const status = cs.opened ? 'opened' : (cs.unlocked ? 'unlocked' : 'locked');
+      const statusLabel = cs.opened ? 'ouverte' : (cs.unlocked ? 'débloquée' : 'verrouillée');
+      return `
       <div class="case-editor" data-id="${cs.id}">
         <div class="num-col">${cs.id}</div>
         <div class="fields">
@@ -611,11 +832,11 @@ function renderAdminEditor(){
         </div>
       </div>
     `;
-  }).join('');
+    }).join('');
 
-  const allUnlocked = cases.every(cs=>cs.unlocked);
+    const allUnlocked = cases.every(cs=>cs.unlocked);
 
-  c.innerHTML = `
+    c.innerHTML = `
     <h2>Gérer les étoiles</h2>
     <p style="font-size:14px;opacity:0.75;">Remplis tes 10 secrets, puis débloque-les toutes quand tu es prêt. Elle les découvrira à son rythme.</p>
     <div style="margin:16px 0 24px;padding:14px 16px;border:1px solid rgba(232,168,87,0.3);border-radius:8px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
@@ -637,87 +858,94 @@ function renderAdminEditor(){
     </div>
   `;
 
-  c.querySelectorAll('.case-editor').forEach(row=>{
-    const id = parseInt(row.dataset.id);
-    row.querySelector('.f-photo').onchange = async (e)=>{
-      const file = e.target.files[0];
-      if(!file) return;
-      const dataUrl = await resizeImage(file);
-      const cs = cases.find(x=>x.id===id);
-      cs.photo = dataUrl;
-      await saveCases();
-      renderAdminEditor();
-    };
-  });
-
-  document.getElementById('saveAllBtn').onclick = async ()=>{
     c.querySelectorAll('.case-editor').forEach(row=>{
       const id = parseInt(row.dataset.id);
-      const cs = cases.find(x=>x.id===id);
-      cs.name = row.querySelector('.f-name').value;
-      cs.message = row.querySelector('.f-msg').value;
+      row.querySelector('.f-photo').onchange = async (e)=>{
+        const file = e.target.files[0];
+        if(!file) return;
+        const dataUrl = await resizeImage(file);
+        const cs = cases.find(x=>x.id===id);
+        cs.photo = dataUrl;
+        await saveCases();
+        renderAdminEditor();
+      };
     });
-    await saveCases();
-    renderGrid();
-    const msg = document.getElementById('savedMsg');
-    msg.classList.add('show');
-    setTimeout(()=>msg.classList.remove('show'), 1800);
-  };
 
-  document.getElementById('lockToggleBtn').onclick = async ()=>{
-    cases.forEach(cs=>{ cs.unlocked = !allUnlocked; });
-    await saveCases();
-    renderGrid();
-    renderAdminEditor();
-  };
+    document.getElementById('saveAllBtn').onclick = async ()=>{
+      c.querySelectorAll('.case-editor').forEach(row=>{
+        const id = parseInt(row.dataset.id);
+        const cs = cases.find(x=>x.id===id);
+        cs.name = row.querySelector('.f-name').value;
+        cs.message = row.querySelector('.f-msg').value;
+      });
+      await saveCases();
+      renderGrid();
+      const msg = document.getElementById('savedMsg');
+      msg.classList.add('show');
+      setTimeout(()=>msg.classList.remove('show'), 1800);
+    };
 
-  document.getElementById('reopenBtn').onclick = async ()=>{
-    cases.forEach(cs=>{ cs.opened = false; cs.openOrder = null; });
-    await saveCases();
-    renderGrid();
-    renderAdminEditor();
-  };
+    document.getElementById('lockToggleBtn').onclick = async ()=>{
+      cases.forEach(cs=>{ cs.unlocked = !allUnlocked; });
+      await saveCases();
+      renderGrid();
+      renderAdminEditor();
+    };
 
-  document.getElementById('resetBtn').onclick = async ()=>{
-    if(!confirm("Vraiment tout effacer ? Cette action est irréversible.")) return;
-    cases = defaultCases();
-    await saveCases();
-    renderGrid();
-    renderAdminEditor();
-  };
-}
+    document.getElementById('reopenBtn').onclick = async ()=>{
+      cases.forEach(cs=>{ cs.opened = false; cs.openOrder = null; });
+      await saveCases();
+      renderGrid();
+      renderAdminEditor();
+    };
 
-function escapeHtml(s){ return (s||"").replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
-function escapeAttr(s){ return escapeHtml(s).replace(/"/g,'&quot;'); }
-
-// ---------- INIT ----------
-async function init(){
-  try{
-    if(configReady()) await ensureTable();
-    await loadCases();
-    renderGrid();
-    setDebug(configReady() ? '' : 'configuration Turso manquante (voir mode admin)');
-  }catch(err){
-    setDebug('Erreur init : ' + err.message);
-    cases = cases || defaultCases();
-    renderGrid();
+    document.getElementById('resetBtn').onclick = async ()=>{
+      if(!confirm("Vraiment tout effacer ? Cette action est irréversible.")) return;
+      cases = defaultCases();
+      await saveCases();
+      renderGrid();
+      renderAdminEditor();
+    };
   }
-  setInterval(pollCases, 12000);
-  document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) pollCases(); });
-}
 
-async function pollCases(){
-  if(!configReady()) return;
-  if(document.hidden) return;
-  if(document.getElementById('adminOverlay').classList.contains('show')) return;
-  try{
-    const before = JSON.stringify(cases.map(c=>({u:c.unlocked,o:c.opened})));
-    await loadCases();
-    const after = JSON.stringify(cases.map(c=>({u:c.unlocked,o:c.opened})));
-    if(before !== after) renderGrid();
-  }catch(e){ /* ignore polling errors */ }
-}
-init();
+  function escapeHtml(s){ return (s||"").replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+  function escapeAttr(s){ return escapeHtml(s).replace(/"/g,'&quot;'); }
+
+  function animateTitleIn(){
+    if(reduceMotion) return;
+    gsap.to('h1 .word', {opacity:1, filter:'blur(0px)', y:0, duration:1, ease:"power3.out", stagger:0.15, delay:0.2});
+    gsap.to('.rule', {scaleX:1, duration:0.8, ease:"power2.out", delay:0.5});
+  }
+  animateTitleIn();
+
+  // ---------- INIT ----------
+  async function init(){
+    try{
+      if(configReady()) await ensureTable();
+      await loadCases();
+      renderGrid();
+      setDebug(configReady() ? '' : 'configuration Turso manquante (voir mode admin)');
+    }catch(err){
+      setDebug('Erreur init : ' + err.message);
+      cases = cases || defaultCases();
+      renderGrid();
+    }
+    setInterval(pollCases, 12000);
+    document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) pollCases(); });
+  }
+
+  async function pollCases(){
+    if(!configReady()) return;
+    if(document.hidden) return;
+    if(document.getElementById('adminOverlay').classList.contains('show')) return;
+    try{
+      const before = JSON.stringify(cases.map(c=>({u:c.unlocked,o:c.opened})));
+      await loadCases();
+      const after = JSON.stringify(cases.map(c=>({u:c.unlocked,o:c.opened})));
+      if(before !== after) renderGrid();
+    }catch(e){ /* ignore polling errors */ }
+  }
+  init();
 </script>
 </body>
 </html>
