@@ -64,6 +64,10 @@
       transform:translateY(14px);
     }
     .footer-note{
+      background:none;
+      border:none;
+      padding:0;
+      cursor:pointer;
       text-align:center;
       font-family:'Fraunces', serif;
       font-style:italic;
@@ -172,34 +176,11 @@
       outline-offset:3px;
     }
 
-    /* admin trigger, discreet */
-    .admin-dot{
-      position:fixed;
-      bottom:6px;
-      right:6px;
-      width:44px;
-      height:44px;
-      border-radius:50%;
-      background:transparent;
-      border:none;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      z-index:2;
-    }
-    .admin-dot::after{
-      content:"";
-      width:14px;
-      height:14px;
-      border-radius:50%;
-      background:rgba(232,168,87,0.2);
-    }
     .debug-status{
       position:fixed;
-      bottom:6px;
+      bottom:max(16px, env(safe-area-inset-bottom));
       left:6px;
-      right:60px;
+      right:6px;
       font-family:'Space Mono',monospace;
       font-size:10px;
       color:var(--starlight-dim);
@@ -307,6 +288,7 @@
       border-radius:10px;max-width:560px;width:100%;
       padding:24px;position:relative;
       border:1px solid rgba(232,168,87,0.25);
+      overflow-x:hidden;
     }
     .admin-panel h2{font-family:'Fraunces',serif;font-style:italic;color:var(--ember-soft);margin-top:0;}
     .pin-box{display:flex;flex-direction:column;gap:12px;align-items:center;padding:20px 0;}
@@ -331,7 +313,7 @@
       font-family:'Fraunces',serif;font-style:italic;font-size:22px;color:var(--ember-soft);
       width:34px;flex-shrink:0;padding-top:6px;
     }
-    .case-editor .fields{flex:1;display:flex;flex-direction:column;gap:6px;}
+    .case-editor .fields{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;}
     .case-editor input[type=text], .case-editor textarea{
       width:100%;padding:6px 8px;border:1px solid rgba(232,168,87,0.3);border-radius:4px;
       font-family:'Lora',serif;font-size:16px;background:var(--midnight-deep);color:var(--starlight);
@@ -361,10 +343,9 @@
 
   <div class="sky" id="sky"></div>
 
-  <div class="footer-note">Pour mon petit ours 🐻</div>
+  <button type="button" class="footer-note" id="adminTrigger">Pour mon petit ours 🐻</button>
 </main>
 
-<button class="admin-dot" id="adminDot" title=""></button>
 <div class="debug-status" id="debugStatus" aria-live="polite"></div>
 
 <!-- reveal modal -->
@@ -686,6 +667,7 @@
     if(c.photo){ img.src = c.photo; img.alt = c.name || ("Étoile " + id); img.style.display='block'; }
     else{ img.style.display='none'; }
     document.getElementById('overlay').classList.add('show');
+    lockScroll(true);
     animateOverlayIn();
     if(!c.opened){
       const discovered = cases.filter(x=>x.opened).sort((a,b)=>(a.openOrder ?? a.id)-(b.openOrder ?? b.id));
@@ -698,8 +680,14 @@
     }
   }
 
+  // prevents the page behind a fullscreen modal from scrolling/bouncing on mobile
+  function lockScroll(lock){
+    document.body.style.overflow = lock ? 'hidden' : '';
+  }
+
   function closeCard(){
     const overlay = document.getElementById('overlay');
+    lockScroll(false);
     if(reduceMotion){ overlay.classList.remove('show'); return; }
     const card = document.querySelector('#overlay .card');
     gsap.to(card, {opacity:0, scale:0.96, duration:0.2, ease:"power1.in", onComplete:()=>overlay.classList.remove('show')});
@@ -712,16 +700,21 @@
   });
 
   // ---------- ADMIN ----------
-  document.getElementById('adminDot').onclick = ()=> openAdmin();
+  document.getElementById('adminTrigger').onclick = ()=> openAdmin();
   document.getElementById('closeAdmin').onclick = ()=>{
     document.getElementById('adminOverlay').classList.remove('show');
+    lockScroll(false);
   };
   document.getElementById('adminOverlay').addEventListener('click', (e)=>{
-    if(e.target === e.currentTarget) document.getElementById('adminOverlay').classList.remove('show');
+    if(e.target === e.currentTarget){
+      document.getElementById('adminOverlay').classList.remove('show');
+      lockScroll(false);
+    }
   });
 
   async function openAdmin(){
     document.getElementById('adminOverlay').classList.add('show');
+    lockScroll(true);
 
     if(!configReady()){
       document.getElementById('adminContent').innerHTML = `
