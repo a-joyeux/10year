@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>10 ans, 10 secrets</title>
+<title>10 Years, 10 Gifts</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Lora:ital,wght@0,400;0,500;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -53,14 +53,14 @@
     color:var(--starlight);
     text-shadow:0 2px 24px rgba(232,168,87,0.2);
   }
-  .subtitle{
+  .footer-note{
     text-align:center;
-    font-family:'Space Mono', monospace;
-    font-size:13px;
-    letter-spacing:2px;
-    text-transform:uppercase;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:14px;
     color:var(--starlight-dim);
-    margin:10px 0 36px;
+    opacity:.6;
+    margin:40px 0 0;
   }
   .rule{
     width:120px;
@@ -302,11 +302,12 @@
 </head>
 <body>
 
-  <h1>10 ans, 10 cadeaux</h1>
-  <div class="subtitle">Petit Ours 🐻</div>
+  <h1>10 Years, 10 Gifts</h1>
   <div class="rule"></div>
 
   <div class="sky" id="sky"></div>
+
+  <div class="footer-note">Pour mon petit ours 🐻</div>
 
   <button class="admin-dot" id="adminDot" title=""></button>
   <div class="debug-status" id="debugStatus" aria-live="polite"></div>
@@ -338,7 +339,6 @@ const TURSO_URL = "libsql://10year-a-joyeux.aws-eu-west-1.turso.io";
 const TURSO_TOKEN = "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJleHAiOjE3ODcxNjk2ODMsImdpZCI6ImZiY2M1NGMwLWRhZWMtNDE4Mi04YWRkLWM2OGNlM2Q2NmFjMyIsImlhdCI6MTc4NDU3NzY4Mywia2lkIjoiZjE0d1p4NXN3b09EdnJ4UmFVaEZmNUdLVWlqRzBTcHNfeTk0Q083NGNtQSIsInJpZCI6IjllZjMyZjIwLTFmZjYtNDBmZi1hZjFmLWFjZmFlNmM1NWUwMCJ9.Qr0QKX6oUB19g3-D8sHm7PgDRhyolSOl1O40RXMG8yafyQuC-TXmkqrvBxjPmIuaJ9Yzz6zdpcavNidiA74WCQ";
 // ==================
 
-const ROMAN = ["I","II","III","IV","V","VI","VII","VIII","IX","X"];
 const CASES_KEY = "gift_cases";
 const PIN_KEY = "admin_pin";
 
@@ -458,13 +458,13 @@ function renderGrid(){
     btn.className = cls;
     btn.style.left = pos.x + '%';
     btn.style.top = pos.y + '%';
-    btn.innerHTML = `<span class="dot"></span><span class="label" aria-hidden="true">${ROMAN[c.id-1]}</span>`;
+    btn.innerHTML = `<span class="dot"></span><span class="label" aria-hidden="true">${c.id}</span>`;
     if(c.unlocked || c.opened){
       btn.onclick = ()=>openCase(c.id);
-      btn.setAttribute('aria-label', (c.opened?'Revoir l’étoile ':'Découvrir l’étoile ') + ROMAN[c.id-1]);
+      btn.setAttribute('aria-label', (c.opened?'Revoir l’étoile ':'Découvrir l’étoile ') + c.id);
     }else{
       btn.disabled = true;
-      btn.setAttribute('aria-label', 'Étoile ' + ROMAN[c.id-1] + ', pas encore visible');
+      btn.setAttribute('aria-label', 'Étoile ' + c.id + ', pas encore visible');
     }
     sky.appendChild(btn);
   });
@@ -473,11 +473,11 @@ function renderGrid(){
 function openCase(id){
   const c = cases.find(x=>x.id===id);
   if(!c) return;
-  document.getElementById('cardRoman').textContent = ROMAN[id-1];
+  document.getElementById('cardRoman').textContent = id;
   document.getElementById('cardName').textContent = c.name || "Un secret t'attend";
   document.getElementById('cardMsg').textContent = c.message || "";
   const img = document.getElementById('cardImg');
-  if(c.photo){ img.src = c.photo; img.alt = c.name || ("Étoile " + ROMAN[id-1]); img.style.display='block'; }
+  if(c.photo){ img.src = c.photo; img.alt = c.name || ("Étoile " + id); img.style.display='block'; }
   else{ img.style.display='none'; }
   document.getElementById('overlay').classList.add('show');
   if(!c.opened){
@@ -599,13 +599,13 @@ function renderAdminEditor(){
     const statusLabel = cs.opened ? 'ouverte' : (cs.unlocked ? 'débloquée' : 'verrouillée');
     return `
       <div class="case-editor" data-id="${cs.id}">
-        <div class="num-col">${ROMAN[cs.id-1]}</div>
+        <div class="num-col">${cs.id}</div>
         <div class="fields">
           <input type="text" class="f-name" placeholder="Nom du cadeau" value="${escapeAttr(cs.name)}">
           <textarea class="f-msg" placeholder="Petit message...">${escapeHtml(cs.message)}</textarea>
           <div class="row-actions">
             <input type="file" accept="image/*" class="f-photo">
-            ${cs.photo ? `<img class="thumb" src="${cs.photo}" alt="Photo case ${ROMAN[cs.id-1]}">` : ''}
+            ${cs.photo ? `<img class="thumb" src="${cs.photo}" alt="Photo case ${cs.id}">` : ''}
             <span class="status-tag ${status}">${statusLabel}</span>
           </div>
         </div>
@@ -693,11 +693,10 @@ function escapeAttr(s){ return escapeHtml(s).replace(/"/g,'&quot;'); }
 // ---------- INIT ----------
 async function init(){
   try{
-    setDebug(configReady() ? 'connexion à Turso…' : 'configuration Turso manquante (voir mode admin)');
     if(configReady()) await ensureTable();
     await loadCases();
     renderGrid();
-    setDebug(configReady() ? 'prêt · connecté à Turso' : 'prêt · sauvegarde inactive (configure Turso)');
+    setDebug(configReady() ? '' : 'configuration Turso manquante (voir mode admin)');
   }catch(err){
     setDebug('Erreur init : ' + err.message);
     cases = cases || defaultCases();
