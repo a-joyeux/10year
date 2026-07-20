@@ -692,6 +692,7 @@
       const prev = discovered[discovered.length-1];
       c.opened = true;
       c.openOrder = cases.reduce((max,x)=> x.openOrder ? Math.max(max,x.openOrder) : max, 0) + 1;
+      cases.forEach(cs=>{ if(!cs.opened) cs.unlocked = false; });
       saveCases();
       revealStar(id, prev ? prev.id : null);
     }
